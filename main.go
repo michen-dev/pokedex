@@ -1,6 +1,9 @@
 package main
 
-
+import (
+	"time"
+	"github.com/michen-dev/pokedex/internal/pokeAPI"
+)
 
 
 type cliCommand struct {
@@ -11,23 +14,16 @@ type cliCommand struct {
 
 type config struct {
 	commands map[string]cliCommand
+	pokeapiClient pokeAPI.Client
+	next *string
+	prev *string
 }
 
 
 func main() {
 	cfg := config{
-		commands: map[string]cliCommand{
-			"help": {
-				name: "help",
-				description: "Displays a help message",
-				callback: commandHelp,
-			},
-			"exit": {
-				name: "exit",
-				description: "Exit the Pokedex",
-				callback: commandExit,
-			},
-		},
+		commands: getCommands(),
+		pokeapiClient: pokeAPI.NewClient(5 * time.Second),
 	}
 
 	startRepl(&cfg)

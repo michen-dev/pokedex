@@ -33,3 +33,29 @@ func startRepl(cfg *config) {
 		fmt.Printf("reading input error: %v", err)
 	}
 }
+
+
+func getCommands() map[string]cliCommand {
+	return map[string]cliCommand{
+		"help": {
+				name: "help",
+				description: "Displays a help message",
+				callback: commandHelp,
+			},
+		"map": {
+			name: "map",
+			description: "Display NEXT 20 location areas in Pokemon world",
+			callback: commandMapf,
+		},
+		"mapb": {
+			name: "mapb",
+			description: "Display PREV 20 location areas in Pokemon world",
+			callback: commandMapb,
+		},
+		"exit": {
+			name: "exit",
+			description: "Exit the Pokedex",
+			callback: commandExit,
+		},
+	}
+}
