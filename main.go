@@ -23,7 +23,7 @@ type config struct {
 func main() {
 	cfg := config{
 		commands: getCommands(),
-		pokeapiClient: pokeAPI.NewClient(5 * time.Second),
+		pokeapiClient: pokeAPI.NewClient(5 * time.Second, time.Second*5),
 	}
 
 	startRepl(&cfg)
