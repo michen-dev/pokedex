@@ -22,10 +22,18 @@ func startRepl(cfg *config) {
 			continue
 		}
 		command := words[0]
+		args := []string{}
+		if len(words) > 1 {
+			args = words[1:]
+		}
 		if registry, ok := commands[command]; !ok {
 			fmt.Println("Unknown command")
 		} else {
-			registry.callback(cfg)
+			err := registry.callback(cfg, args...)
+			if err != nil {
+				fmt.Println(err)
+				continue
+			}
 		}
 	}
 
@@ -51,6 +59,11 @@ func getCommands() map[string]cliCommand {
 			name: "mapb",
 			description: "Display PREV 20 location areas in Pokemon world",
 			callback: commandMapb,
+		},
+		"explore": {
+			name: "explore",
+			description: "Explore the Pokemon list of a specific Location area",
+			callback: commandExplore,
 		},
 		"exit": {
 			name: "exit",
