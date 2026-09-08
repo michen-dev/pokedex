@@ -21,7 +21,7 @@ func commandCatch(cfg *config, pokedex map[string]pokeAPI.Poke_Detail, args ...s
 		fmt.Printf("You already caught %s\n", name)
 		return nil
 	}
-	
+
 	pokemon, err := cfg.pokeapiClient.Get_pokemon_detail(name)
 	if err != nil {
 		return err
@@ -32,6 +32,7 @@ func commandCatch(cfg *config, pokedex map[string]pokeAPI.Poke_Detail, args ...s
 	base_experience := pokemon.Base_experience
 	threshold := catch_threshold + catch_threshold*(base_experience/100)
 	roll := rand.Float64() * 100.0
+	fmt.Printf("threshold: %v - roll: %v - exp: %v\n", threshold, roll, base_experience)
 	if roll >= float64(threshold) {
 		fmt.Printf("%s was caught!\n", name)
 		pokedex[name] = pokemon
