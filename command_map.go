@@ -2,9 +2,11 @@ package main
 
 import (
 	"fmt"
+
+	"github.com/michen-dev/pokedex/internal/pokeAPI"
 )
 
-func commandMapf(cfg *config, args ...string) error {
+func commandMapf(cfg *config, pokedex map[string]pokeAPI.Poke_Detail, args ...string) error {
 	data, err := cfg.pokeapiClient.Get_location_areas(cfg.next)
 	if err != nil {
 		return err
@@ -20,7 +22,7 @@ func commandMapf(cfg *config, args ...string) error {
 	return nil
 }
 
-func commandMapb(cfg *config, args ...string) error {
+func commandMapb(cfg *config, pokedex map[string]pokeAPI.Poke_Detail, args ...string) error {
 	if cfg.prev == nil {
 		fmt.Println("you're on the first page")
 		return nil

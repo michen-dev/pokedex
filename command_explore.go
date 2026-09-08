@@ -2,9 +2,11 @@ package main
 
 import (
 	"fmt"
+
+	"github.com/michen-dev/pokedex/internal/pokeAPI"
 )
 
-func commandExplore(cfg *config, args ...string) error {
+func commandExplore(cfg *config, pokedex map[string]pokeAPI.Poke_Detail, args ...string) error {
 	if len(args) == 0 {
 		return fmt.Errorf("Please provide location area")
 	}

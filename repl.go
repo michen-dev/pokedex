@@ -4,12 +4,14 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"github.com/michen-dev/pokedex/internal/pokeAPI"
 )
 
 
 func startRepl(cfg *config) {
+	pokedex := map[string]pokeAPI.Poke_Detail{}
 	commands := cfg.commands
-	commandHelp(cfg)
+	commandHelp(cfg, pokedex)
 	scanner := bufio.NewScanner(os.Stdin)
 	for {
 		if !scanner.Scan() {
@@ -29,7 +31,7 @@ func startRepl(cfg *config) {
 		if registry, ok := commands[command]; !ok {
 			fmt.Println("Unknown command")
 		} else {
-			err := registry.callback(cfg, args...)
+			err := registry.callback(cfg, pokedex, args...)
 			if err != nil {
 				fmt.Println(err)
 				continue
@@ -64,6 +66,11 @@ func getCommands() map[string]cliCommand {
 			name: "explore",
 			description: "Explore the Pokemon list of a specific Location area",
 			callback: commandExplore,
+		},
+		"catch": {
+			name: "catch",
+			description: "Catch Pokemon",
+			callback: commandCatch,
 		},
 		"exit": {
 			name: "exit",

@@ -9,7 +9,7 @@ import (
 type cliCommand struct {
 	name string
 	description string
-	callback func(*config, ...string) error
+	callback func(*config, map[string]pokeAPI.Poke_Detail, ...string) error
 }
 
 type config struct {
